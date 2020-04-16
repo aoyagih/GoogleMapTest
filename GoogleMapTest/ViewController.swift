@@ -11,8 +11,63 @@ import GoogleMaps
 
 class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate {
 
+    //グローバル変数
     //位置情報取得用のManager
     let locationManager = CLLocationManager()
+        
+    //理工キャンパスを中心のcameraとmapView
+    let camera = GMSCameraPosition.camera(withLatitude: 35.706031, longitude: 139.706818, zoom: 17.0)
+    let mapView = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height * 0.9), camera: GMSCameraPosition.camera(withLatitude: 35.706031, longitude: 139.706818, zoom: 17.0))
+    
+    
+    
+    //理工キャンパスへカメラが移動するボタンの動作
+    @IBAction func didTapZoomRikoCampus(_ sender: Any) {
+        print("tap button1")
+        
+        let rikoCampus = GMSCameraPosition.camera(withLatitude: 35.706031, longitude: 139.706818, zoom: 17.0)
+        mapView.camera = rikoCampus
+    }
+    
+    //経路検索ボタンの動作
+    //Todo:現時点では直線しか引けない(泣)　別のAPIを使う必要がある。
+    @IBAction func didTapSearchWay(_ sender: Any) {
+        print("tap button2")
+        setupLocationManager()
+        
+        if let mylocation = mapView.myLocation {
+            print("User's location: \(mylocation)")
+            
+            let path = GMSMutablePath()
+            path.add(CLLocationCoordinate2D(latitude: mylocation.coordinate.latitude, longitude: mylocation.coordinate.longitude))
+            path.add(CLLocationCoordinate2D(latitude: 35.706031, longitude: 139.706818))
+            
+            let line = GMSPolyline(path: path)
+            line.map = mapView
+            
+        } else {
+          print("User's location is unknown")
+        }
+        
+        
+    }
+    
+    //現在地へカメラが移動するボタンの動作
+    @IBAction func didTapZoomCurrentPlace(_ sender: Any) {
+        
+        print("tap button3")
+        setupLocationManager()
+        
+        if let mylocation = mapView.myLocation {
+            print("User's location: \(mylocation)")
+            
+            let currentPlace = GMSCameraPosition.camera(withLatitude: mylocation.coordinate.latitude, longitude: mylocation.coordinate.longitude, zoom: 17.0)
+            mapView.camera = currentPlace
+        } else {
+          print("User's location is unknown")
+        }
+        
+    }
     
     
     override func viewDidLoad() {
@@ -24,8 +79,6 @@ class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDel
         
         
         //理工キャンパスを中心にして表示
-        let camera = GMSCameraPosition.camera(withLatitude: 35.706031, longitude: 139.706818, zoom: 17.0)
-        let mapView = GMSMapView.map(withFrame: self.view.frame, camera: camera)
         self.view.addSubview(mapView)
         
         
@@ -84,6 +137,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDel
         marker2.title = "高田馬場駅"
         marker2.snippet = "西早稲田キャンパスまで徒歩15分"
         marker2.map = mapView
+        
         
         
     }
