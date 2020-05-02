@@ -28,7 +28,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDel
     /// Google API key
     let GOOGLE_API_KEY = "AIzaSyDiyMJF8nyHzfuSTbuZIjJiOEFNDAloKbY"
     
-    
+    var alertController: UIAlertController!
     
     //理工キャンパスへカメラが移動するボタンの動作
     @IBAction func didTapZoomRikoCampus(_ sender: Any) {
@@ -208,6 +208,15 @@ class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDel
                     let points = routes[0]["overview_polyline"]["points"].string
                     print("points: \(points ?? "")")
                 
+                    let summary = routes[0]["summary"].string!
+                    //let title = "経路検索"
+                    let distance: String = routes[0]["legs"][0]["distance"]["text"].string!
+                    let duration: String = routes[0]["legs"][0]["duration"]["text"].string!
+                    let message: String = "西早稲田キャンパスまで" + distance + "(" + duration + ")"
+                    self.alert(title: "ルート:" + summary,
+                               message: message)
+                    
+                    
                     //overview_polylineをマップに描く
                     let path = GMSMutablePath(fromEncodedPath: points ?? "")
                     let polyline = GMSPolyline(path: path)
@@ -223,5 +232,16 @@ class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDel
         
         
     }
+    
+    func alert(title:String, message:String) {
+        alertController = UIAlertController(title: title,
+                                   message: message,
+                                   preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK",
+                                       style: .default,
+                                       handler: nil))
+        present(alertController, animated: true)
+    }
+
     
 }
