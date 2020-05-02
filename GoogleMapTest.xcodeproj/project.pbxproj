@@ -104,6 +104,7 @@
 				D14C8D6C2446047100B6EE79 /* Frameworks */,
 				D14C8D6D2446047100B6EE79 /* Resources */,
 				40A969E15EDD1BD08B1CA682 /* [CP] Copy Pods Resources */,
+				7B9D214766BB072D4F7EAE09 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -198,6 +199,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GoogleMapTest/Pods-GoogleMapTest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7B9D214766BB072D4F7EAE09 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GoogleMapTest/Pods-GoogleMapTest-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GoogleMapTest/Pods-GoogleMapTest-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GoogleMapTest/Pods-GoogleMapTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
