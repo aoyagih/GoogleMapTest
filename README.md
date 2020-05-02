@@ -3,13 +3,13 @@
 https://developers.google.com/maps/documentation/ios-sdk/start?authuser=1
 
 ### テストした機能
-- [x] 現在地を中心にするボタン
-- [x] 理工キャンパスを中心にするボタン
-- [x] markerを理工キャンや駅などに立てる
-- [ ] ルート検索ボタン(現在地から理工キャンパス、高田馬場駅)
-- [x] GoogleOverlay
-- [x] 座標のクリック処理
-- [x] 北を上にするボタン
+- 現在地を中心にするボタン
+- 理工キャンパスを中心にするボタン
+- markerを理工キャンや駅などに立てる
+- ルート検索ボタン(現在地から理工キャンパス、高田馬場駅)
+- GoogleOverlay
+- 座標のクリック処理
+- 北を上にするボタン
 
 ### 初期設定
 1. cocoapodをインストール
@@ -25,8 +25,7 @@ pod install
 ~~~
 結構時間かかる(10分くらい)   
 
-4.  API keyの取得   
-AIzaSyDiyMJF8nyHzfuSTbuZIjJiOEFNDAloKbY  
+4.  API keyの取得     
 
 5. API keyのセット  
 https://developers.google.com/maps/documentation/ios-sdk/get-api-key?authuser=1#add_key  
@@ -36,14 +35,14 @@ Cocoapodを使っているときは、projectname.workspaceから開く！
 
 ### 各機能について
 
-- [x] 現在地を中心にするボタン  
+- 現在地を中心にするボタン  
 公式ドキュメント(分かりづらい)  
 https://developers.google.com/maps/documentation/ios-sdk/current-place-tutorial?authuser=1   
 こっちの方が分かりやすかった  
 https://qiita.com/powerispower/items/39203e1e908149fead19  
 
-シミュレーターの場合、`Features/Location/Custom Location`で現在地を設定  
-新宿駅　35.689862,139.700523  
+シミュレーターの場合、上のメニューバーの`Features/Location/Custom Location`で現在地を設定  
+新宿駅の座標　35.689862,139.700523  
 
 ボタンはライブラリで備わっている  
 ~~~Swift
@@ -52,16 +51,16 @@ https://qiita.com/powerispower/items/39203e1e908149fead19
         mapView.settings.myLocationButton = true
 ~~~
 
-- [ ] ルート検索ボタン(現在地から理工キャンパス、高田馬場駅)   
-→別のAPIを使う必要がありそう
+- ルート検索ボタン(現在地から理工キャンパス、高田馬場駅)   
+→Directions APIというAPIを使う。https://developers.google.com/maps/documentation/directions/intro
 
 
-- [x] GoogleOverlay  
-参考URL  
+- GoogleOverlay  
+以下のURLに書いてある通りにやる。  
 https://developers.google.com/maps/documentation/ios-sdk/overlays  
 
 
-- [x] 座標のクリック処理  
+- 座標のクリック処理  
 まず、上のextendの欄にGMSMapViewDelegateを追加。  
 次に、viewDidLoad内に
 ~~~Swift
@@ -75,7 +74,10 @@ mapView.delegate = self
                                         + String(coordinate.longitude))
     }
 ~~~
-- [x] 北を上にするボタン
+
+- 北を上にするボタン
+マップの向きを変えると、コンパスボタンが現れる。
+他にも、マップの向きは`animate(toBearing: x)`で変更できる。
 ~~~Swift
 //bearingの値が0で北が上、180で南が上
         mapView.animate(toBearing: 0)
