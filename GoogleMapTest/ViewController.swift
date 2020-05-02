@@ -216,13 +216,25 @@ class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDel
                     self.alert(title: "ルート:" + summary,
                                message: message)
                     
-                    
                     //overview_polylineをマップに描く
                     let path = GMSMutablePath(fromEncodedPath: points ?? "")
                     let polyline = GMSPolyline(path: path)
                     polyline.strokeWidth = 3.0
                     polyline.map = self.mapView
                 
+                    //経路が表示される四隅の座標を取得
+                    let edge1: Double = routes[0]["bounds"]["northeast"]["lat"].double!
+                    let edge2: Double = routes[0]["bounds"]["northeast"]["lng"].double!
+                    let edge3: Double = routes[0]["bounds"]["southwest"]["lat"].double!
+                    let edge4: Double = routes[0]["bounds"]["southwest"]["lng"].double!
+                    
+                    //mapviewのzoomを適当な範囲に合うように調整
+                    let northeast = CLLocationCoordinate2D(latitude: edge1, longitude: edge2)
+                    let southwest = CLLocationCoordinate2D(latitude: edge3, longitude: edge4)
+                    let bounds = GMSCoordinateBounds(coordinate: northeast, coordinate: southwest)
+                    //四辺のpaddingを50としている
+                    let camera = self.mapView.camera(for: bounds, insets: UIEdgeInsets(top:50, left:50, bottom:50, right:50))!
+                    self.mapView.camera = camera
                 
                 case .failure(let error):
                     print(error)
