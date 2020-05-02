@@ -208,12 +208,13 @@ class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDel
                     let points = routes[0]["overview_polyline"]["points"].string
                     print("points: \(points ?? "")")
                 
+                    //経路の概要が書かれたアラートを表示
                     let summary = routes[0]["summary"].string!
                     //let title = "経路検索"
                     let distance: String = routes[0]["legs"][0]["distance"]["text"].string!
                     let duration: String = routes[0]["legs"][0]["duration"]["text"].string!
                     let message: String = "西早稲田キャンパスまで" + distance + "(" + duration + ")"
-                    self.alert(title: "ルート:" + summary,
+                    self.showAlert(title: "ルート:" + summary,
                                message: message)
                     
                     //overview_polylineをマップに描く
@@ -245,7 +246,8 @@ class ViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDel
         
     }
     
-    func alert(title:String, message:String) {
+    //アラートを表示するメソッド
+    func showAlert(title:String, message:String) {
         alertController = UIAlertController(title: title,
                                    message: message,
                                    preferredStyle: .alert)
